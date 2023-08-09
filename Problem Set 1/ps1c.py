@@ -27,7 +27,24 @@ def calculate_current_savings(portion_saved):
 annual_salary = 150000
 print(calculate_current_savings(0.4411))
 
+# Initial guess between 0-100% of monthly salary saved
 low = 0
 high = 10000
 portion_saved = ((low + high) / 2) / 10000
 epsilon = 100
+
+while (
+    abs(calculate_current_savings(portion_saved) - total_cost * portion_down_payment)
+    >= epsilon
+):
+    if calculate_current_savings(portion_saved) > total_cost * portion_down_payment:
+        high = portion_saved * 10000
+        portion_saved = ((low + high) / 2) / 10000
+    else:
+        low = portion_saved * 10000
+        portion_saved = portion_saved = ((low + high) / 2) / 10000
+
+print(f"Best savings rate is: {portion_saved}")
+print(
+    f"Based on the code completion, current savings after three years will be: {calculate_current_savings(portion_saved)}"
+)
