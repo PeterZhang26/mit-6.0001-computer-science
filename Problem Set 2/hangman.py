@@ -67,11 +67,11 @@ def is_word_guessed(secret_word, letters_guessed):
     
     # iterating through secret word string
     for letter in secret_word:
-      word_guessed.append(letter in letters_guessed) # appending True or False for letter matched in the 2 lists
+        word_guessed.append(letter in letters_guessed) # appending True or False for letter matched in the 2 lists
     if False in word_guessed: # if False, return False
-      word_guessed = False
+        word_guessed = False
     else:
-      word_guessed = True
+        word_guessed = True
       
     return word_guessed     
 
@@ -88,10 +88,10 @@ def get_guessed_word(secret_word, letters_guessed):
     # guessing the letters from the word that are correct
     guessed = ''
     for char in secret_word:
-      if char in letters_guessed:
-        guessed = guessed + char # adding the guessed letter to the string if it is guessed
-      else:
-        guessed = guessed + '_ ' # empty space after for user readability
+        if char in letters_guessed:
+            guessed = guessed + char # adding the guessed letter to the string if it is guessed
+        else:
+            guessed = guessed + '_ ' # empty space after for user readability
     
     return guessed
 
@@ -107,8 +107,8 @@ def get_available_letters(letters_guessed):
     available_letters = list(string.ascii_lowercase)
     
     for letter in available_letters:
-      if letter in letters_guessed:
-        available_letters.remove(letter)
+        if letter in letters_guessed:
+            available_letters.remove(letter)
     available_letters = ''.join(available_letters)
     
     return available_letters
@@ -154,39 +154,53 @@ def hangman(secret_word):
     
     # Game Loop, checking word guesses and number of guesses
     while is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
-      # Messages to the user
-      print(f"You have {guesses_left} guesses left.")
-      print(f"Available letters: {get_available_letters(letters_guessed)}")
-      current_guess = input("Please guess a letter:").lower()
+        # Messages to the user
+        print(f"You have {guesses_left} guesses left.")
+        print(f"Available letters: {get_available_letters(letters_guessed)}")
+        current_guess = input("Please guess a letter:").lower()
       
-      # User does not guess an ascii character
-      if current_guess not in string.ascii_letters:
-        # User has warnings left
-        if warnings > 0:
-          warnings -= 1
-          print(f"Oops! That is not a valid letter. You have {warnings} warnings left.")
-          print("-------------")
+        # User does not guess an ascii character
+        if current_guess not in string.ascii_letters:
+            # User has warnings left
+            if warnings > 0:
+                warnings -= 1
+                print(f"Oops! That is not a valid letter. You have {warnings} warnings left.")
+                print("-------------")
         # User does not have warnings left
-        else:
-          guesses_left -= 1
-          warnings = 0
-          print(f"Oops! That is not a valid letter. You have no warnings left so you lose one guess: {get_guessed_word(secret_word, letters_guessed)}")
+            else:
+                guesses_left -= 1
+                warnings = 0
+                print(f"Oops! That is not a valid letter. You have no warnings left so you lose one guess: {get_guessed_word(secret_word, letters_guessed)}")
           
-      # User makes an already guessed character
-      elif current_guess in letters_guessed:
-        # User has warnings left
-        if warnings > 0:
-          warnings -= 1
-          print(f"Oops! You have already guessed that letter. You have {warnings} warnings left.")
-          print("-------------")
+        # User makes an already guessed character
+        elif current_guess in letters_guessed:
+            # User has warnings left
+            if warnings > 0:
+                warnings -= 1
+                print(f"Oops! You have already guessed that letter. You have {warnings} warnings left.")
+                print("-------------")
           
-        # User has no warnings left
+            # User has no warnings left
+            else:
+                guesses_left -= 1
+                warnings = 0
+                print(f"Oops! You have already guessed that letter. You have no warnings left. So you lose one guess: {get_guessed_word(secret_word, letters_guessed)}")
+                print("-------------")
+          
+        # User makes a good guess
         else:
-          guesses_left -= 1
-          warnings = 0
-          print(f"Oops! You have already guessed that letter. You have no warnings left. So you lose one guess: {get_guessed_word(secret_word, letters_guessed)}")
-          ("-------------")
-        
+            letters_guessed.append(current_guess)
+            # User guess is correct
+            if current_guess in secret_word:
+                print(f"Good guess: {get_guessed_word(secret_word, letters_guessed)}")
+                print("-------------")
+            # User guess is incorrect
+            else:
+                print(f"Oops! That letter is not in my word {get_guessed_word(secret_word, letters_guessed)}")
+                guesses_left -= 1
+                print("-------------")
+          
+      
 
 
 
