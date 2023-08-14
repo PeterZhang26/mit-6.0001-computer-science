@@ -153,7 +153,7 @@ def hangman(secret_word):
     print("-------------")
     
     # Game Loop, checking word guesses and number of guesses
-    while is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
+    while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
         # Messages to the user
         print(f"You have {guesses_left} guesses left.")
         print(f"Available letters: {get_available_letters(letters_guessed)}")
@@ -199,6 +199,16 @@ def hangman(secret_word):
                 print(f"Oops! That letter is not in my word {get_guessed_word(secret_word, letters_guessed)}")
                 guesses_left -= 1
                 print("-------------")
+                
+    # User ran out of guesses
+    if guesses_left == 0:
+        print(f"Sorry, you ran out of guesses, the word was {secret_word}")
+    
+    # User won
+    else:
+        print("Congratulations, you won!")
+        print(f"Your total score for this game is: {guesses_left * len(secret_word)}")
+        print(f"{secret_word}")    
           
       
 
