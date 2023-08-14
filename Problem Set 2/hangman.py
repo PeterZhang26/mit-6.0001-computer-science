@@ -102,7 +102,16 @@ def get_available_letters(letters_guessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
+    # checking letters in guessed string already, variable lower case ascii has a-z
+    available_letters = list(string.ascii_lowercase)
+    
+    for letter in available_letters:
+      if letter in letters_guessed:
+        available_letters.remove(letter)
+    available_letters = ''.join(available_letters)
+    
+    return available_letters
     
     
 
