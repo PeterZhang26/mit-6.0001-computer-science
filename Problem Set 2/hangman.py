@@ -153,7 +153,7 @@ def hangman(secret_word):
     print("-------------")
     
     # Game Loop, checking word guesses and number of guesses
-    while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
+    while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0: # Condition is checking secret word is NOT guessed AND there are still guesses left"
         # Messages to the user
         print(f"You have {guesses_left} guesses left.")
         print(f"Available letters: {get_available_letters(letters_guessed)}")
@@ -211,8 +211,6 @@ def hangman(secret_word):
         print(f"{secret_word}")    
           
       
-
-
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
