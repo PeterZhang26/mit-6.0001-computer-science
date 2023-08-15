@@ -50,8 +50,6 @@ def choose_word(wordlist):
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
-secret_word = "apple"
-letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -62,7 +60,7 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
+    
     word_guessed = []
     
     # iterating through secret word string
@@ -82,9 +80,8 @@ def get_guessed_word(secret_word, letters_guessed):
     letters_guessed: list (of letters), which letters have been guessed so far
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
-    '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"     
-  
+    '''   
+
     # guessing the letters from the word that are correct
     guessed = ''
     for char in secret_word:
@@ -101,8 +98,7 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    
+        
     # checking letters in guessed string already, variable lower case ascii has a-z
     available_letters = list(string.ascii_lowercase)
     
@@ -140,7 +136,7 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
+    
     # Set up initial variables.
     guesses_left = 6
     warnings = 3
@@ -166,7 +162,7 @@ def hangman(secret_word):
                 warnings -= 1
                 print(f"Oops! That is not a valid letter. You have {warnings} warnings left.")
                 print("-------------")
-        # User does not have warnings left
+            # User does not have warnings left
             else:
                 guesses_left -= 1
                 warnings = 0
@@ -231,8 +227,25 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
+    my_word_list = list(my_word)
+    other_word_list = list(other_word)
+    for char in my_word_list[:]:
+        if char == " ":
+            my_word_list.remove(char)
+            
+    match = True
+    if len(my_word_list) != len(other_word_list):
+        match = False
+    else:
+        for char_index in range(len(my_word_list)):
+            if my_word_list[char_index] != "_":
+                if my_word_list[char_index] != other_word_list[char_index]:
+                    match = False
+            else:
+                if other_word_list[char_index] in my_word_list:
+                    match = False
+    return match
 
 
 
@@ -246,8 +259,13 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    matches = []
+    for other_word in wordlist:
+        if match_with_gaps(my_word, other_word):
+            matches.append(other_word)
+    if len(matches) == 0:
+        print("No matches found.")
+    return " ".join(matches)
 
 
 
