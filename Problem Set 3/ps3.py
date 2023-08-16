@@ -289,7 +289,7 @@ def play_hand(hand, word_list):
         # Display the hand
         print(f"Current hand: {display_hand(hand)}")
         # Ask user for input
-        word = input("Enter word, or (!!) to indicate that you are finished.")
+        word = input("Enter word, or (!!) to indicate that you are finished: ")
         # If the input is two exclamation points:
         if word == "!!": # End the game (break out of the loop)
             break
@@ -344,7 +344,7 @@ def substitute_hand(hand, letter):
     
     hand_copy = hand.copy()
     count = 0
-    possible_letters = list(VOWELS, CONSONANTS)
+    possible_letters = list(VOWELS + CONSONANTS)
     new_letter = ""
     
     for key in hand:
@@ -392,7 +392,7 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
     
-    number_of_hands = int(input("Enter total number of hands:"))
+    number_of_hands = int(input("Enter total number of hands: "))
     game_score = 0
     has_substituted = False
     current_hand = deal_hand(HAND_SIZE)
@@ -400,7 +400,7 @@ def play_game(word_list):
     while number_of_hands > 0:
         print(f"Current hand: {display_hand(current_hand)}")
         if not has_substituted:
-            if input("Would you like to substitute a letter?").lower() == "yes":
+            if input("Would you like to substitute a letter? ").lower() == "yes":
                 has_substituted = True
                 current_hand = substitute_hand(current_hand, input("Which letter would you like to replace: "))
                 print(display_hand(current_hand))
@@ -409,7 +409,7 @@ def play_game(word_list):
         print("----------")
         number_of_hands -= 1
         if number_of_hands > 0:
-            if input("Would you like to replay the hand?").lower() != "yes":
+            if input("Would you like to replay the hand? ").lower() != "yes":
                 current_hand = deal_hand(HAND_SIZE)
                 
     print(f"Total score over all hands: {game_score}")
