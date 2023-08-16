@@ -121,10 +121,10 @@ def display_hand(hand):
     """
     # Starting with empty list
     hand_list = []
-    for letter in hand.keys():              # Looping through key values in hand dict
-        for j in range(hand[letter]):       # Indexing into dictionary key:value 
-             hand_list.append(letter)       # Adding letter in hand dict to empty list
-    return " ".join(hand_list)              # Print listed values as string from list
+    for letter in hand.keys(): # Looping through key values in hand dict
+        for j in range(hand[letter]): # Indexing into dictionary key:value 
+             hand_list.append(letter) # Adding letter in hand dict to empty list
+    return " ".join(hand_list) # Print listed values as string from list
 
 #
 # Make sure you understand how this function works and what it does!
@@ -183,12 +183,12 @@ def update_hand(hand, word):
     """
     # Make a copy of hand so original is not modified
     hand_copy = hand.copy()
-    for letter in word.lower():         # Lower letters so that case does not matter
+    for letter in word.lower(): # Lower letters so that case does not matter
         try:
-            hand_copy[letter] -= 1      # If letter in hand dict, increment -1
-            if hand_copy[letter] < 0:   # Resetting key value to 0 if smaller than 0
+            hand_copy[letter] -= 1 # If letter in hand dict, increment -1
+            if hand_copy[letter] < 0: # Resetting key value to 0 if smaller than 0
                 hand_copy[letter] = 0
-        except KeyError:                # If dict index out of range, pass KeyError
+        except KeyError: # If dict index out of range, pass KeyError
             pass
     
     return hand_copy
@@ -221,13 +221,13 @@ def is_valid_word(word, hand, word_list):
     if "*" in word.lower():
         for vowel in VOWELS:
             wildcard_word_possibilities.append(word.replace("*", vowel).lower()) # List valid words that vowels replace "*"
-        for word in wildcard_word_possibilities[:]:                              # Copy of wildcard words list   
-            if word not in word_list:                                            # Remove words that aren't valid   
+        for word in wildcard_word_possibilities[:]: # Copy of wildcard words list   
+            if word not in word_list: # Remove words that aren't valid   
                 wildcard_word_possibilities.remove(word)
-        if len(wildcard_word_possibilities) == 0:                                # If no wildcard words possible   
+        if len(wildcard_word_possibilities) == 0: # If no wildcard words possible                                   
             is_valid = False
             
-    else:                                                                        # No words matched in word list   
+    else: # No words matched in word list                                                                          
         if word.lower() not in word_list:
             is_valid = False
             
@@ -392,7 +392,27 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
     
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
+    number_of_hands = int(input("Enter total number of hands:"))
+    game_score = 0
+    has_substituted = False
+    current_hand = deal_hand(HAND_SIZE)
+    
+    while number_of_hands > 0:
+        print(f"Current hand: {display_hand(current_hand)}")
+        if not has_substituted:
+            if input("Would you like to substitute a letter?").lower() == "yes":
+                has_substituted = True
+                current_hand = substitute_hand(current_hand, input("Which letter would you like to replace: "))
+                print(display_hand(current_hand))
+    
+        game_score += play_hand(current_hand, load_words())
+        print("----------")
+        number_of_hands -= 1
+        if number_of_hands > 0:
+            if input("Would you like to replay the hand?").lower() != "yes":
+                current_hand = deal_hand(HAND_SIZE)
+                
+    print(f"Total score over all hands: {game_score}")
     
 
 
