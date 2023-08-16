@@ -92,7 +92,17 @@ def get_word_score(word, n):
     returns: int >= 0
     """
     
-    pass  # TO DO... Remove this line when you implement this function
+    letter_points = 0
+    for letter in word.lower():
+        if letter != "*":
+            letter_points += SCRABBLE_LETTER_VALUES.get(letter)
+        else:
+            letter_points += 0
+    
+    if 7 * len(word) - 3 * (n - len(word)) > 1:
+        return letter_points * (7 * len(word) - 3 * (n - len(word)))
+    else:
+        return letter_points
 
 #
 # Make sure you understand how this function works and what it does!
@@ -109,11 +119,11 @@ def display_hand(hand):
 
     hand: dictionary (string -> int)
     """
-    
+    hand_list = []
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter, end=' ')      # print all on the same line
-    print()                              # print an empty line
+             hand_list.append(letter)      # print all on the same line
+    return " ".join(hand_list)                              # print an empty line
 
 #
 # Make sure you understand how this function works and what it does!
