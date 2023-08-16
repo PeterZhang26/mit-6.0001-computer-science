@@ -342,7 +342,23 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     
-    pass  # TO DO... Remove this line when you implement this function
+    hand_copy = hand.copy()
+    count = 0
+    possible_letters = list(VOWELS, CONSONANTS)
+    new_letter = ""
+    
+    for key in hand:
+        if key == letter:
+            count = hand_copy[letter]
+    del(hand_copy[letter])
+    
+    for letter in possible_letters[:]:
+        if letter in hand:
+            possible_letters.remove(letter)
+    new_letter = random.choice(possible_letters)
+    hand_copy[new_letter] = count
+    
+    return hand_copy
        
     
 def play_game(word_list):
