@@ -205,7 +205,30 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
 
-    pass  # TO DO... Remove this line when you implement this function
+    is_valid = True
+    wildcard_word_possibilities = []
+    
+    for letter in word.lower():
+        try:
+            if hand[letter] < word.lower().count(letter):
+                is_valid = False
+        except KeyError:
+            is_valid = False
+    # Checking for wildcard character "*", loop through VOWELS dict        
+    if "*" in word.lower():
+        for vowel in VOWELS:
+            wildcard_word_possibilities.append(word.replace("*", vowel).lower()) # List valid words that vowels replace "*"
+        for word in wildcard_word_possibilities[:]:                              # Copy of wildcard words list   
+            if word not in word_list:                                            # Remove words that aren't valid   
+                wildcard_word_possibilities.remove(word)
+        if len(wildcard_word_possibilities) == 0:                                # If no wildcard words possible   
+            is_valid = False
+            
+    else:                                                                        # No words matched in word list   
+        if word.lower() not in word_list:
+            is_valid = False
+            
+    return is_valid
 
 #
 # Problem #5: Playing a hand
