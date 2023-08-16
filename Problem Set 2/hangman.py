@@ -50,6 +50,8 @@ def choose_word(wordlist):
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
+# secret_word = "apple"
+# letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -60,7 +62,7 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    
+
     word_guessed = []
     
     # iterating through secret word string
@@ -80,8 +82,8 @@ def get_guessed_word(secret_word, letters_guessed):
     letters_guessed: list (of letters), which letters have been guessed so far
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
-    '''   
-
+    ''' 
+  
     # guessing the letters from the word that are correct
     guessed = ''
     for char in secret_word:
@@ -98,7 +100,7 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-        
+    
     # checking letters in guessed string already, variable lower case ascii has a-z
     available_letters = list(string.ascii_lowercase)
     
@@ -136,7 +138,7 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    
+    # FILL IN YOUR CODE HERE AND DELETE "pass"
     # Set up initial variables.
     guesses_left = 6
     warnings = 3
@@ -146,15 +148,16 @@ def hangman(secret_word):
     # Game startup messages
     print("Welcome to the game Hangman!")
     print(f"I am thinking of a word that is {len(secret_word)} letters long.")
+    print(f"You have {warnings} warnings left.")
     print("-------------")
     
     # Game Loop, checking word guesses and number of guesses
-    while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0: # Condition is checking secret word is NOT guessed AND there are still guesses left"
+    while not (is_word_guessed(secret_word, letters_guessed) and guesses_left) > 0:
         # Messages to the user
         print(f"You have {guesses_left} guesses left.")
         print(f"Available letters: {get_available_letters(letters_guessed)}")
         current_guess = input("Please guess a letter:").lower()
-      
+        
         # User does not guess an ascii character
         if current_guess not in string.ascii_letters:
             # User has warnings left
@@ -196,17 +199,16 @@ def hangman(secret_word):
                 guesses_left -= 1
                 print("-------------")
                 
-    # User ran out of guesses
+    # Exit game loop            
     if guesses_left == 0:
-        print(f"Sorry, you ran out of guesses, the word was {secret_word}")
-    
-    # User won
+        print(f"Sorry, you ran out of guesses, the word was: {secret_word}")
+    # User won the game, scoring of points    
     else:
-        print("Congratulations, you won!")
-        print(f"Your total score for this game is: {guesses_left * len(secret_word)}")
-        print(f"{secret_word}")    
-          
-      
+        print("Congratulations you won!")
+        print(f"Your total score for this game is: {guesses_left * len(set(secret_word))}")
+        print(f"The secret word was: {secret_word}")
+
+
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
@@ -227,7 +229,6 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    
     my_word_list = list(my_word)
     other_word_list = list(other_word)
     for char in my_word_list[:]:
@@ -369,7 +370,7 @@ def hangman_with_hints(secret_word):
     else:
         print("Congratulations, you won!")
         print(f"Your total score for this game is: {guesses_left * len(secret_word)}")
-        print(f"{secret_word}")   
+        print(f"{secret_word}")
 
 
 
