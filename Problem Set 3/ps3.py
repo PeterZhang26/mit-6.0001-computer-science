@@ -119,11 +119,12 @@ def display_hand(hand):
 
     hand: dictionary (string -> int)
     """
+    # Starting with empty list
     hand_list = []
-    for letter in hand.keys():
-        for j in range(hand[letter]):
-             hand_list.append(letter)      # print all on the same line
-    return " ".join(hand_list)                              # print an empty line
+    for letter in hand.keys():              # Looping through key values in hand dict
+        for j in range(hand[letter]):       # Indexing into dictionary key:value 
+             hand_list.append(letter)       # Adding letter in hand dict to empty list
+    return " ".join(hand_list)              # Print listed values as string from list
 
 #
 # Make sure you understand how this function works and what it does!
@@ -177,14 +178,14 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-
+    # Make a copy of hand so original is not modified
     hand_copy = hand.copy()
-    for letter in word.lower():
+    for letter in word.lower():         # Lower letters so that case does not matter
         try:
-            hand_copy[letter] -= 1
-            if hand_copy[letter] < 0:
+            hand_copy[letter] -= 1      # If letter in hand dict, increment -1
+            if hand_copy[letter] < 0:   # Resetting key value to 0 if smaller than 0
                 hand_copy[letter] = 0
-        except KeyError:
+        except KeyError:                # If dict index out of range, pass KeyError
             pass
     
     return hand_copy
