@@ -38,7 +38,9 @@ def get_permutations(sequence):
     if len(sequence) == 1:
         return list(sequence)
     else:
-        return insert_in_all_positions(sequence[0], get_permutations[1::])
+        return insert_in_all_positions(sequence[0], get_permutations(sequence[1::]))
+
+print(get_permutations("abc"))
 
 if __name__ == '__main__':
 #    #EXAMPLE
