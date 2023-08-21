@@ -3,6 +3,17 @@
 # Collaborators:
 # Time Spent: x:xx
 
+def insert_in_all_positions(char, word_list):
+    ext_lst = []
+    output_list = []
+    for elem in word_list:
+        ext_lst.append(list(elem))
+    for lst in ext_lst:
+        for i in range(len(lst) + 1):
+            lst.insert(i, char)
+            output_list.append("".join(lst))
+            lst.remove(char)
+
 def get_permutations(sequence):
     '''
     Enumerate all permutations of a given string
