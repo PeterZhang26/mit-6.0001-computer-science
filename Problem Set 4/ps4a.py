@@ -13,6 +13,7 @@ def insert_in_all_positions(char, word_list):
             lst.insert(i, char)
             output_list.append("".join(lst))
             lst.remove(char)
+    return output_list
 
 def get_permutations(sequence):
     '''
@@ -34,7 +35,10 @@ def get_permutations(sequence):
     a different order than what is listed here.
     '''
 
-    pass #delete this line and replace with your code here
+    if len(sequence) == 1:
+        return list(sequence)
+    else:
+        return insert_in_all_positions(sequence[0], get_permutations[1::])
 
 if __name__ == '__main__':
 #    #EXAMPLE
