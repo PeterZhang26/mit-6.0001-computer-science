@@ -109,7 +109,26 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to
                  another letter (string).
         """
-        pass  # delete this line and replace with your code here
+        assert (0 <= shift) and (shift <= 26), "Invalid shift value"
+
+        alphabet_lower = string.ascii_lowercase
+        alphabet_upper = string.ascii_uppercase
+        mapping_letter = (
+            {}
+        )  # Empty dictionary to map letter to another letter for cipher
+
+        for case in (alphabet_lower, alphabet_upper):
+            for (
+                letter
+            ) in case:  # if index >= 26, get abs difference bettwen index and 26
+                if (case.index(letter) + shift) >= 26:
+                    mapping_letter[letter] = case[
+                        abs((case.index(letter) + shift) - 26)
+                    ]
+                else:
+                    mapping_letter[letter] = case[case.index(letter) + shift]
+
+        return mapping_letter
 
     def apply_shift(self, shift):
         """
