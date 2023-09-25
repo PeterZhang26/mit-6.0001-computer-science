@@ -142,7 +142,24 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         """
-        pass  # delete this line and replace with your code here
+        self.build_shift_dict(shift)
+        shift_dict = self.build_shift_dict(shift)
+        msg_shift = []
+
+        for i in range(0, len(self.message_text)):
+            # print(i)
+            keys = shift_dict.keys()
+            if self.message_text[i] in keys:
+                print("Yes")
+                shifted_letter = shift_dict.get(self.message_text[i])
+            else:
+                shifted_letter = self.message_text[i]
+            print(shift_dict.keys())
+            print(shifted_letter)
+            msg_shift.append(shifted_letter)
+        print(msg_shift)
+
+        return "".join(msg_shift)
 
 
 class PlaintextMessage(Message):
@@ -161,7 +178,9 @@ class PlaintextMessage(Message):
             self.message_text_encrypted (string, created using shift)
 
         """
-        pass  # delete this line and replace with your code here
+
+        self.text = text
+        self.shift = shift
 
     def get_shift(self):
         """
@@ -169,7 +188,7 @@ class PlaintextMessage(Message):
 
         Returns: self.shift
         """
-        pass  # delete this line and replace with your code here
+        return self.shift
 
     def get_encryption_dict(self):
         """
@@ -234,10 +253,17 @@ class CiphertextMessage(Message):
 
 if __name__ == "__main__":
     #    #Example test case (PlaintextMessage)
-    #    plaintext = PlaintextMessage('hello', 2)
-    #    print('Expected Output: jgnnq')
-    #    print('Actual Output:', plaintext.get_message_text_encrypted())
-    #
+    # plaintext = PlaintextMessage('hello', 2)
+    # print('Expected Output: jgnnq')
+    # print('Actual Output:', plaintext.get_message_text_encrypted())
+
+    msg = Message("Time to play tennis!,")
+    print(msg)
+
+    print(msg.get_message_text())
+    # print(msg.get_valid_words())
+    # print(msg.build_shift_dict(2))
+    print(msg.apply_shift(25))
     #    #Example test case (CiphertextMessage)
     #    ciphertext = CiphertextMessage('jgnnq')
     #    print('Expected Output:', (24, 'hello'))
