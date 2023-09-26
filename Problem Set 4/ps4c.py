@@ -114,11 +114,24 @@ class SubMessage(object):
         """
 
         mapping_letter = {}
+        all_letters = string.ascii_letters
+
+        print(all_letters)
+
+        for i in range(len(CONSONANTS_LOWER)):
+            char_low = CONSONANTS_LOWER[i]
+            mapping_letter[char_low] = char_low
+
+            char_high = CONSONANTS_UPPER[i]
+            mapping_letter[char_high] = char_high
 
         for i, char in enumerate(vowels_permutation):
             mapping_letter[char] = VOWELS_LOWER[i]
-
             mapping_letter[char.upper()] = VOWELS_UPPER[i]
+
+        print(mapping_letter)
+
+        return mapping_letter
 
     def apply_transpose(self, transpose_dict):
         """
@@ -128,7 +141,15 @@ class SubMessage(object):
         on the dictionary
         """
 
-        pass  # delete this line and replace with your code here
+        swapped_vowels = ""
+
+        for letter in self.message_text:
+            if letter in transpose_dict:
+                swapped_vowels += transpose_dict[letter]
+            else:
+                swapped_vowels += letter
+
+        return swapped_vowels
 
 
 class EncryptedSubMessage(SubMessage):
@@ -142,7 +163,7 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         """
-        pass  # delete this line and replace with your code here
+        pass
 
     def decrypt_message(self):
         """
