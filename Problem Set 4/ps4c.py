@@ -116,7 +116,7 @@ class SubMessage(object):
         mapping_letter = {}
         all_letters = string.ascii_letters
 
-        print(all_letters)
+        # print(all_letters)
 
         for i in range(len(CONSONANTS_LOWER)):
             char_low = CONSONANTS_LOWER[i]
@@ -129,7 +129,7 @@ class SubMessage(object):
             mapping_letter[char] = VOWELS_LOWER[i]
             mapping_letter[char.upper()] = VOWELS_UPPER[i]
 
-        print(mapping_letter)
+        # print(mapping_letter)
 
         return mapping_letter
 
@@ -163,7 +163,7 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         """
-        pass
+        SubMessage.__init__(self, text)
 
     def decrypt_message(self):
         """
@@ -183,7 +183,31 @@ class EncryptedSubMessage(SubMessage):
 
         Hint: use your function from Part 4A
         """
-        pass  # delete this line and replace with your code here
+        vowels_permutation_lower = get_permutations(VOWELS_LOWER)
+        vowels_permutation_upper = get_permutations(VOWELS_UPPER)
+        valid_words = self.get_valid_words()
+
+        print("Vowels lower:", vowels_permutation_lower)
+        print("Vowels upper:", vowels_permutation_upper)
+        encrypted_message = self.message_text
+
+        for permutation in vowels_permutation_lower:
+            transpose_dict = self.build_transpose_dict(permutation)
+            decrypted_text = self.apply_transpose(transpose_dict)
+
+            print("Transpose dictionary", transpose_dict)
+            print("Decrypted text", decrypted_text)
+            split_words = decrypted_text.split(" ")
+            print(split_words)
+
+            count_true = 0
+            for word in split_words:
+                # print(is_word(word_list, word))
+                if is_word(valid_words, word):
+                    count_true += 1
+                    if word in valid_words:
+                        print("         Found")
+                    print("     Count of true:", count_true)
 
 
 if __name__ == "__main__":
