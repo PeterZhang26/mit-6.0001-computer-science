@@ -46,7 +46,7 @@ def get_permutations(sequence):
         return insert_in_all_positions(sequence[0], get_permutations(sequence[1::]))
 
 
-print(get_permutations("abc"))
+# print(get_permutations("abc"))
 
 if __name__ == "__main__":
     #    #EXAMPLE

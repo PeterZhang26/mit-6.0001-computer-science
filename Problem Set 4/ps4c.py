@@ -186,28 +186,40 @@ class EncryptedSubMessage(SubMessage):
         vowels_permutation_lower = get_permutations(VOWELS_LOWER)
         vowels_permutation_upper = get_permutations(VOWELS_UPPER)
         valid_words = self.get_valid_words()
+        best_count = 0
 
-        print("Vowels lower:", vowels_permutation_lower)
-        print("Vowels upper:", vowels_permutation_upper)
-        encrypted_message = self.message_text
+        # print("Vowels lower:", vowels_permutation_lower)
+        # print("Vowels upper:", vowels_permutation_upper)
+        best_permutation = ""
+        best_decrypted_message = self.message_text
 
         for permutation in vowels_permutation_lower:
             transpose_dict = self.build_transpose_dict(permutation)
             decrypted_text = self.apply_transpose(transpose_dict)
 
-            print("Transpose dictionary", transpose_dict)
-            print("Decrypted text", decrypted_text)
-            split_words = decrypted_text.split(" ")
-            print(split_words)
-
             count_true = 0
+
+            # print("Transpose dictionary", transpose_dict)
+            # print("Decrypted text", decrypted_text)
+            # print("Decrypted text", decrypted_text)
+            split_words = decrypted_text.split()
+            # print(split_words)
             for word in split_words:
                 # print(is_word(word_list, word))
                 if is_word(valid_words, word):
                     count_true += 1
-                    if word in valid_words:
-                        print("         Found")
-                    print("     Count of true:", count_true)
+                    # print("         Found")
+                    # print("     Count of true:", count_true)
+
+                    if count_true > best_count:
+                        best_count = count_true
+                        best_decrypted_message = decrypted_text
+                        best_permutation = permutation
+
+            print(permutation, "->", decrypted_text, "  score:", count_true)
+
+        print(best_permutation, best_decrypted_message)
+        return best_decrypted_message
 
 
 if __name__ == "__main__":
@@ -215,10 +227,59 @@ if __name__ == "__main__":
     message = SubMessage("Hello World!")
     permutation = "eaiuo"
     enc_dict = message.build_transpose_dict(permutation)
+    print()
     print("Original message:", message.get_message_text(), "Permutation:", permutation)
     print("Expected encryption:", "Hallu Wurld!")
     print("Actual encryption:", message.apply_transpose(enc_dict))
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
+    print()
+    print()
 
-    # TODO: WRITE YOUR TEST CASES HERE
+    # Test case 1
+    message_1 = SubMessage("What a beautiful day today!")
+    permutation_1 = "uoiea"
+    enc_dict_1 = message_1.build_transpose_dict(permutation_1)
+    print()
+    print(
+        "Original message:", message_1.get_message_text(), "Permutation:", permutation_1
+    )
+    print("Expected encryption:", "Whut u bouatifal duy teduy!")
+    print("Actual encryption:", message_1.apply_transpose(enc_dict_1))
+    enc_message_1 = EncryptedSubMessage(message_1.apply_transpose(enc_dict_1))
+    print("Decrypted message:", enc_message_1.decrypt_message())
+    print()
+    print()
+
+    # Test case 2
+    message_2 = SubMessage("I actually don't even think I can brother!")
+    permutation_2 = "ieauo"
+    enc_dict_2 = message_2.build_transpose_dict(permutation_2)
+    print()
+    print(
+        "Original message:", message_2.get_message_text(), "Permutation:", permutation_2
+    )
+    print("Expected encryption:", "A ictoilly dun't even thank A cin bruther!")
+    print("Actual encryption:", message_2.apply_transpose(enc_dict_2))
+    enc_message_2 = EncryptedSubMessage(message_2.apply_transpose(enc_dict_2))
+    print("Decrypted message:", enc_message_2.decrypt_message())
+    print()
+    print()
+
+    # Test case 3
+    message_2 = SubMessage("Please tell me something good will come out of this today!")
+    permutation_2 = "auieo"
+    enc_dict_2 = message_2.build_transpose_dict(permutation_2)
+    print()
+    print(
+        "Original message:", message_2.get_message_text(), "Permutation:", permutation_2
+    )
+    print(
+        "Expected encryption:",
+        "Ploaso toll mo sumothing guud will cumo uet uf this tuday!",
+    )
+    print("Actual encryption:", message_2.apply_transpose(enc_dict_2))
+    enc_message_2 = EncryptedSubMessage(message_2.apply_transpose(enc_dict_2))
+    print("Decrypted message:", enc_message_2.decrypt_message())
+    print()
+    print()
